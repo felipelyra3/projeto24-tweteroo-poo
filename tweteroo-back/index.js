@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import cors from 'cors';
 import express, { json } from 'express';
 import SignUp from "./src/routes/login.routes.js";
+import Tweets from "./src/routes/tweets.routes.js";
 
 const app = express();
 
@@ -13,19 +14,7 @@ const tweets = [];
 
 app.post('/sign-up', SignUp);
 
-app.post('/tweets', (req, res) => {
-  const { tweet, username } = req.body;
-
-  if (!username || !tweet) {
-    return res.status(400).send('Todos os campos são obrigatórios!');
-  }
-
-  const { avatar } = usuarios.find(user => user.username === username);
-
-  tweets.push({ username, tweet, avatar });
-
-  res.status(201).send('OK, seu tweet foi criado');
-});
+app.post('/tweets', Tweets);
 
 app.get('/tweets/:username', (req, res) => {
   const { username } = req.params;
